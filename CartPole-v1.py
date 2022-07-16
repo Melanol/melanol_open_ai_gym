@@ -13,13 +13,13 @@ from stable_baselines3 import A2C
 from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
 POLICY = 'MlpPolicy'
-STEPS = 10000
-DEMO_STEPS = 100
+STEPS = 0
+DEMO_STEPS = 1000
 LOAD = True
 SAVE = True
 VERBOSE = False  # Outputs progress into console
 FILENAME = 'CartPole-v1'
-LAUNCH_TENSORBOARD = True
+LAUNCH_TENSORBOARD = False
 TENSORBOARD_LOG = "./tensorboard_log/"
 
 
@@ -37,9 +37,10 @@ def model_process():
 
     # Learn and save
     model.learn(total_timesteps=STEPS)
+    print('Learning complete')
     if SAVE:
         model.save(FILENAME)
-        print('Learning complete')
+        print('Saving complete')
 
     # Demo
     obs = env.reset()
