@@ -15,7 +15,7 @@ DEMO_STEPS = 0
 LOAD = True
 SAVE = True
 VERBOSE = False  # Outputs progress into console
-FILENAME = 'A2C_MlpPolicy_CartPole-v1'
+FILENAME = 'CartPole-v1'
 TENSORBOARD_LOG = "./tensorboard_log/"
 
 # Create env and model
