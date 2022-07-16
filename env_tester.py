@@ -6,7 +6,7 @@ import gym
 
 
 def all_envs():
-    all_envs = gym.envs.registry.values()
+    all_envs = gym.envs.registry.all()
     env_ids = [env_spec.id for env_spec in all_envs]
     return env_ids
 
@@ -19,22 +19,17 @@ def render_env(env_id=random.choice(all_envs())):
     env = gym.make(env_id)
     print()
     print(env_id)
-    print(env.metadata['render_modes'])
     env.reset()
-    if 'rgb_array' in env.metadata['render_modes']:
-        image = env.render(mode='rgb_array')
-        plt.imshow(image, interpolation='nearest')
-        plt.title(env_id)
-        plt.show()
-    else:
-        env.render(mode='ansi')
+    image = env.render(mode='rgb_array')
+    plt.imshow(image, interpolation='nearest')
+    plt.title(env_id)
+    plt.show()
 
 
 def render_video(env_id):
     env = gym.make(env_id)
     print()
     print(env_id)
-    print(env.metadata['render_modes'])
     env.reset()
     for _ in range(100):
         env.render()
