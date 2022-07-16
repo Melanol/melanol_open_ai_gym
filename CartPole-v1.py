@@ -1,6 +1,4 @@
-"""Terminate manually after "Model done", as tensorboard will not terminate itself."""
-
-# A2C does not converge properly even with the recommended RMSpropTFLike
+"""Terminate manually, as tensorboard will not terminate itself."""
 
 import multiprocessing as mp
 from os.path import exists
@@ -13,13 +11,13 @@ from stable_baselines3 import A2C
 from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
 POLICY = 'MlpPolicy'
-STEPS = 0
+STEPS = 50000
 DEMO_STEPS = 1000
 LOAD = True
 SAVE = True
 VERBOSE = False  # Outputs progress into console
 FILENAME = 'CartPole-v1'
-LAUNCH_TENSORBOARD = False
+LAUNCH_TENSORBOARD = True
 TENSORBOARD_LOG = "./tensorboard_log/"
 
 
