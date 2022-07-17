@@ -11,22 +11,22 @@ from stable_baselines3 import A2C
 from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
 POLICY = 'MlpPolicy'
-STEPS = 0
-VIDEO_STEPS = 100
+STEPS = 200000
 LOAD = True
 SAVE = True
-SAVE_VIDEO = True
+VIDEO_STEPS = 1000
+SAVE_VIDEO = False
 VERBOSE = False  # Outputs progress into console
-FILENAME = 'CartPole-v1'
-LAUNCH_TENSORBOARD = False  # If true, will have to terminate the process manually
-TENSORBOARD_LOG = "./tensorboard_log/CartPole-v1"
+ENVNAME = 'CartPole-v1'
+LAUNCH_TENSORBOARD = True  # If true, will have to terminate the process manually
+TENSORBOARD_LOG = f"./{ENVNAME}/tensorboard_log/"
 
 
 def model_process():
     # Create env and model
-    env = gym.make('CartPole-v1')
-    if LOAD and exists(FILENAME+'.zip'):
-        model = A2C.load(FILENAME, env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
+    env = gym.make(ENVNAME)
+    if LOAD and exists(f'./{ENVNAME}/{ENVNAME}.zip'):
+        model = A2C.load(f'./{ENVNAME}/{ENVNAME}', env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
                          policy_kwargs=dict(optimizer_class=RMSpropTFLike, optimizer_kwargs=dict(eps=1e-5)))
         print('Model loaded')
     else:
@@ -38,7 +38,7 @@ def model_process():
     model.learn(total_timesteps=STEPS)
     print('Learning complete')
     if SAVE:
-        model.save(FILENAME)
+        model.save(ENVNAME)
         print('Saving complete')
 
     # Video
@@ -52,6 +52,7 @@ def model_process():
             obs = env.reset()
 
     if SAVE_VIDEO:
+        print('Making video')
         dpi = 70
         height, width, _ = images[0].shape
         frames = []
@@ -62,8 +63,10 @@ def model_process():
         for i in range(len(images)):
             frames.append([plt.imshow(images[i], animated=True)])
         ani = animation.ArtistAnimation(fig, frames, interval=1000/30, blit=True)
-        ani.save('movie.mp4')
+        ani.save(f'{ENVNAME}.mp4')
         print('Video saved')
+
+    print('Done')
 
 
 def start_tensorboard():

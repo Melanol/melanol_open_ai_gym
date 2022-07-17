@@ -9,6 +9,6 @@ for file in glob.glob("*.zip"):
 
 # Delete tensorboard logs
 try:
-    shutil.rmtree('./tensorboard_log')
+    shutil.rmtree('CartPole-v1/tensorboard_log')
 except FileNotFoundError:
     pass
