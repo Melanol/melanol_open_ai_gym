@@ -7,18 +7,21 @@ import time
 import webbrowser
 
 import gym
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 from stable_baselines3 import A2C
 from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
 POLICY = 'MlpPolicy'
-STEPS = 50000
-DEMO_STEPS = 1000
+STEPS = 0
+VIDEO_STEPS = 100
 LOAD = True
 SAVE = True
+SAVE_VIDEO = True
 VERBOSE = False  # Outputs progress into console
 FILENAME = 'CartPole-v1'
-LAUNCH_TENSORBOARD = True
-TENSORBOARD_LOG = "./tensorboard_log/"
+LAUNCH_TENSORBOARD = False
+TENSORBOARD_LOG = "./tensorboard_log/CartPole-v1"
 
 
 def model_process():
@@ -40,24 +43,35 @@ def model_process():
         model.save(FILENAME)
         print('Saving complete')
 
-    # Demo
+    # Video
+    images = []
     obs = env.reset()
-    for i in range(DEMO_STEPS):
+    for i in range(VIDEO_STEPS):
+        images.append(env.render(mode='rgb_array'))
         action, _state = model.predict(obs, deterministic=True)
         obs, reward, done, info = env.step(action)
-        env.render()
         if done:
             obs = env.reset()
 
+    if SAVE_VIDEO:
+        frames = []
+        fig = plt.figure()
+        plt.gca().set_axis_off()
+        for i in range(len(images)):
+            frames.append([plt.imshow(images[i], animated=True)])
+        ani = animation.ArtistAnimation(fig, frames, interval=1000/30, blit=True)
+        ani.save('movie.mp4')
+        print('Video saved')
+
 
 def start_tensorboard():
-    cmd = 'tensorboard --logdir ./tensorboard_log'
+    cmd = f'tensorboard --logdir {TENSORBOARD_LOG}'
     subprocess.run(cmd, shell=True, stderr=subprocess.DEVNULL)
     print('Tensorboard launched')
 
 
 def open_tensorboard():
-    time.sleep(1)  # Wait until tensorboard is online
+    time.sleep(3)  # Wait until tensorboard is online
     url = "http://localhost:6006/ "
     webbrowser.open(url, new=0, autoraise=True)
 

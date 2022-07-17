@@ -27,19 +27,20 @@ def render_env(env_id=random.choice(all_envs())):
 
 
 def render_video(env_id):
+    """I tried making this function universal for all gym envs, but they are too different."""
     env = gym.make(env_id)
     print()
     print(env_id)
     env.reset()
-    for _ in range(100):
+    for _ in range(1000):
         env.render()
         action = env.action_space.sample()
         observation, reward, done, info = env.step(action)
         if done:
-            observation, info = env.reset(return_info=True)
+            _, _, _, _ = env.reset()
 
 
 if __name__ == '__main__':
     # print_all_envs()
     # render_env()
-    render_video('Pendulum-v1')
+    render_video('CartPole-v1')
