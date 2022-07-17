@@ -1,5 +1,3 @@
-"""Terminate manually, as tensorboard will not terminate itself."""
-
 import multiprocessing as mp
 from os.path import exists
 import subprocess
@@ -20,7 +18,7 @@ SAVE = True
 SAVE_VIDEO = True
 VERBOSE = False  # Outputs progress into console
 FILENAME = 'CartPole-v1'
-LAUNCH_TENSORBOARD = False
+LAUNCH_TENSORBOARD = False  # If true, will have to terminate the process manually
 TENSORBOARD_LOG = "./tensorboard_log/CartPole-v1"
 
 
@@ -54,9 +52,13 @@ def model_process():
             obs = env.reset()
 
     if SAVE_VIDEO:
+        dpi = 70
+        height, width, _ = images[0].shape
         frames = []
-        fig = plt.figure()
-        plt.gca().set_axis_off()
+        fig = plt.figure(figsize=(width/dpi, height/dpi), frameon=False)
+        ax = plt.Axes(fig, [0., 0., 1., 1.])
+        ax.set_axis_off()
+        fig.add_axes(ax)
         for i in range(len(images)):
             frames.append([plt.imshow(images[i], animated=True)])
         ani = animation.ArtistAnimation(fig, frames, interval=1000/30, blit=True)
