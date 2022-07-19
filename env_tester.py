@@ -42,5 +42,5 @@ def render_video(env_id):
 
 if __name__ == '__main__':
     # print_all_envs()
-    # render_env()
-    render_video('CartPole-v1')
+    # render_env('Pendulum-v1')
+    render_video('Pendulum-v1')

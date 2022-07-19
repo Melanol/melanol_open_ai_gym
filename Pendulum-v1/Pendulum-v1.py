@@ -7,30 +7,30 @@ import webbrowser
 import gym
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from stable_baselines3 import A2C
+from stable_baselines3 import PPO
 from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
-ENVNAME = 'CartPole-v1'
+ENVNAME = 'Pendulum-v1'
 POLICY = 'MlpPolicy'
-STEPS = 200000
+STEPS = 0
 LOAD = True
-SAVE = True
+SAVE = 0
 VIDEO_STEPS = 1000
-SAVE_VIDEO = False
+SAVE_VIDEO = True
 VERBOSE = False  # Outputs progress into console
-LAUNCH_TENSORBOARD = True  # If true, will have to terminate the process manually
-TENSORBOARD_LOG = f"./{ENVNAME}/tensorboard_log/"
+LAUNCH_TENSORBOARD = 0  # If true, will have to terminate the process manually
+TENSORBOARD_LOG = f"./tensorboard_log/"
 
 
 def model_process():
     # Create env and model
     env = gym.make(ENVNAME)
     if LOAD and exists(f'./{ENVNAME}.zip'):
-        model = A2C.load(f'./{ENVNAME}', env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
+        model = PPO.load(f'./{ENVNAME}', env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
                          policy_kwargs=dict(optimizer_class=RMSpropTFLike, optimizer_kwargs=dict(eps=1e-5)))
         print('Model loaded')
     else:
-        model = A2C(POLICY, env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
+        model = PPO(POLICY, env, verbose=VERBOSE, tensorboard_log=TENSORBOARD_LOG,
                     policy_kwargs=dict(optimizer_class=RMSpropTFLike, optimizer_kwargs=dict(eps=1e-5)))
         print('New model created')
 
