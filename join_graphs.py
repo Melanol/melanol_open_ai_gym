@@ -29,3 +29,5 @@ for run in all_runs:
         target_dir = f'./{run[:run.index("_")]}'
         shutil.move(file_path, target_dir)
         os.rmdir(f'./{run}')
+
+os.chdir('../..')
