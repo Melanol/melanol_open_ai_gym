@@ -14,11 +14,11 @@ ENVNAME = 'Pendulum-v1'
 POLICY = 'MlpPolicy'
 STEPS = 0
 LOAD = True
-SAVE = 0
+SAVE = False
 VIDEO_STEPS = 1000
 SAVE_VIDEO = True
 VERBOSE = False  # Outputs progress into console
-LAUNCH_TENSORBOARD = 0  # If true, will have to terminate the process manually
+LAUNCH_TENSORBOARD = False  # If true, will have to terminate the process manually
 TENSORBOARD_LOG = f"./tensorboard_log/"
 
 

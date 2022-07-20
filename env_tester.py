@@ -37,10 +37,10 @@ def render_video(env_id):
         action = env.action_space.sample()
         observation, reward, done, info = env.step(action)
         if done:
-            _, _, _, _ = env.reset()
+            env.reset()
 
 
 if __name__ == '__main__':
     # print_all_envs()
-    # render_env('Pendulum-v1')
-    render_video('Pendulum-v1')
+    # render_env('LunarLander-v2')
+    render_video('LunarLander-v2')
