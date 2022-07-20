@@ -14,7 +14,6 @@ for run in all_runs:
         algo_names.add(run[:run.index('_')])
     else:
         algo_names.add(run)
-# {el[:el.index('_')] for el in all_runs}
 
 # Make folders
 for algo in algo_names:
