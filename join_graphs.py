@@ -8,15 +8,25 @@ TENSORBOARD_LOG = 'tensorboard_log'
 
 os.chdir(f'./{ALGO_FOLDER}/{TENSORBOARD_LOG}')
 all_runs = os.listdir()
-algo_names = {el[:el.index('_')] for el in all_runs}
+algo_names = set()
+for run in all_runs:
+    if '_' in run:
+        algo_names.add(run[:run.index('_')])
+    else:
+        algo_names.add(run)
+# {el[:el.index('_')] for el in all_runs}
 
 # Make folders
 for algo in algo_names:
-    os.mkdir(f'./{algo}')
+    try:
+        os.mkdir(f'./{algo}')
+    except FileExistsError:
+        pass
 
 # Move logs
 for run in all_runs:
-    file_path = f'./{run}/' + os.listdir(f'./{run}')[0]
-    target_dir = f'./{run[:run.index("_")]}'
-    shutil.move(file_path, target_dir)
-    os.rmdir(f'./{run}')
+    if '_' in run:
+        file_path = f'./{run}/' + os.listdir(f'./{run}')[0]
+        target_dir = f'./{run[:run.index("_")]}'
+        shutil.move(file_path, target_dir)
+        os.rmdir(f'./{run}')
