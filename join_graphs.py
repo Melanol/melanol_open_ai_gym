@@ -1,4 +1,4 @@
-"""Combines tensorboard graphs into 1 so that it looks like training never stopped."""
+"""Combines tensorboard graphs into one so that it looks like training never stopped."""
 
 import os
 import shutil
