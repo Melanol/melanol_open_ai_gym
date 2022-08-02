@@ -12,11 +12,11 @@ from stable_baselines3.common.sb2_compat.rmsprop_tf_like import RMSpropTFLike
 
 ENVNAME = 'LunarLander-v2'
 POLICY = 'MlpPolicy'
-STEPS = 0
-LOAD = True
-SAVE = True
-VIDEO_STEPS = 1000
-SAVE_VIDEO = True
+STEPS = 1000
+LOAD = False
+SAVE = False
+VIDEO_STEPS = 0
+SAVE_VIDEO = False
 VERBOSE = False  # Outputs progress into console
 LAUNCH_TENSORBOARD = False  # If true, will have to terminate the process manually
 TENSORBOARD_LOG = f"./tensorboard_log/"

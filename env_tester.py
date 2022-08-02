@@ -41,6 +41,6 @@ def render_video(env_id):
 
 
 if __name__ == '__main__':
-    # print_all_envs()
+    print_all_envs()
     # render_env('LunarLander-v2')
-    render_video('LunarLander-v2')
+    # render_video('LunarLander-v2')
